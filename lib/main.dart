@@ -10,57 +10,61 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Control Bar Example',
-      theme: ThemeData.dark(), 
-      home: const MyHomePage(),
-    );
-  }
-}
-
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: const Center(
-        child: Text(
-          'Pemutar Musik',
-          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+      title: 'Demo GridView',
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('Demo GridView'),
+          backgroundColor: Colors.amber,
         ),
-        
+      body: GridView(
+        padding: const EdgeInsets.all(10),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          mainAxisSpacing: 10,
+          crossAxisSpacing: 10,
+        ),
+        scrollDirection: Axis.vertical,
+        physics: const NeverScrollableScrollPhysics(),
+        children: [
+          //title akan ditambahkan
+          tile(Colors.blueAccent.shade400, 'demo_gridview/assets/icon/student.png', 'Kehadiran'),
+          tile(Colors.greenAccent.shade400, 'demo_gridview/assets/icon/timetable.png', 'Jadwal Kuliah'), 
+          tile(Colors.yellowAccent.shade400, 'demo_gridview/assets/icon/homeschooling.png', 'Tugas'),
+          tile(Colors.redAccent.shade400, 'demo_gridview/assets/icon/check-list.png', 'Pengumuman'),
+          tile(Colors.purpleAccent.shade400, 'demo_gridview/assets/icon/bestgrade.png', 'Nilai'),
+          tile(Colors.tealAccent.shade400, 'demo_gridview/assets/icon/pencil.png', 'Catatan'),
+        ],
       ),
-
-      bottomNavigationBar: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
-        color: Colors.black54, 
-        child: Row(
-          children: [
-            
-            const Expanded(
-              child: Icon(Icons.shuffle, color: Colors.white, size: 32),
-            ),
-          
-            const Expanded(
-              child: Icon(Icons.skip_previous, color: Colors.white, size: 32),
-            ),
-           
-            const Flexible(
-              flex: 2,
-              fit: FlexFit.tight,
-              child: Icon(Icons.play_circle_fill, color: Colors.white, size: 48),
-            ),
-           
-            const Expanded(
-              child: Icon(Icons.skip_next, color: Colors.white, size: 32),
-            ),
-            
-            const Expanded(
-              child: Icon(Icons.repeat, color: Colors.white, size: 32),
-            ),
-          ],
-        ),
       ),
     );
   }
 }
+
+ClipRRect tile (Color warnakotak, String gambar, String judul){
+  return ClipRRect(
+    borderRadius: BorderRadius.circular(18),
+    child: Container(
+      color: warnakotak,
+      child: GridTile(
+        footer: SizedBox(
+          height: 45,
+          child: GridTileBar(
+            backgroundColor: Colors.black38,
+            title: Text(
+              judul,
+              style: const TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),          
+        ),
+        child: Image.asset(
+          gambar,
+         scale: 4,
+      ),
+    ),
+    ),
+  );
+}
+
